@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Boba Shop</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/10.5.2/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/10.5.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/10.5.2/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/10.5.2/firebase-firestore.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+
+    <header>
+      <div class="logo">
+          <a href="#">Bubble <span>Tea</span></a>
+      </div>
+
+      <nav>
+          <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#menu">Menu</a></li>
+              <li><a href="#shop">Shop</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a id="myBtn">Login</a></li>
+          </ul>
+      </nav>
+  </header>
+  
+
+  <div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="padding:35px 50px;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5><span class="glyphicon glyphicon-lock"></span>Login</h5>
+          </div>
+          <div class="modal-body" style="padding:40px 50px;">
+            <form role="form" id="login-account">
+              <div class="form-group">
+                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
+                <input type="text" class="form-control" id="email-login" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                <input type="text" class="form-control" id="password-login" placeholder="Enter password">
+              </div>
+                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            <p>Not a member? <a id="sign-up">Sign Up</a></p>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="padding:35px 50px;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 id="beep"><span class="glyphicon glyphicon-lock"></span> Register Account</h5>
+          </div>
+          <div class="modal-body" style="padding:40px 50px;">
+            <form role="form" id="register-account">
+              <div class="form-group">
+                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
+                <input type="text" class="form-control" id="email-register" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                <input type="text" class="form-control" id="password-register" placeholder="Enter password">
+              </div>
+                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal3" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="padding:35px 50px;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5>Are you sure you want to sign out?</h5>
+          </div>
+          <div class="modal-body" style="padding:40px 50px;">
+            <form role="form" id="login-account">
+              <div class="form-group">
+              </div>
+                <button type="submit" class="btn btn-success btn-block" id="signOut">Yes</button>
+              <div class="form-group">
+              </div>
+                <button type="submit" class="btn btn-success btn-block" data-dismiss="modal">No</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <div class="content">
+      <h2>Bubble Tea</h2>
+      <p>Sip, Savor, and Smile. Where Every Boba Sip is a Burst of Joy. </p>
+  </div>
+
+  <div class="menu" id="menu">
+      <div class="menu-header">
+          <h4>Bubble Tea Menu</h4>
+      </div>
+      <div class="menu-content">
+          <div class="black-sugar-boba">
+              <img src="img/blacksugar.webp" alt="">
+          </div>
+          <div class="black-sugar-boba-body">
+              <h2>Black Sugar Boba</h2>
+              <label>Black sugar boba is a chewy and sweet tapioca pearl with a rich, caramelized flavor, often found
+                  in bubble tea drinks.</label>
+          </div>
+      </div>
+      <div class="matcha-boba-milk">
+          <img src="img/matcha-Boba.jpg" alt="">
+      </div>
+      <div class="matcha-boba-milk-body">
+          <h2>Matcha Boba Milk</h2>
+          <label>Matcha boba milk is a creamy and earthy beverage featuring vibrant green tea flavor and chewy tapioca
+              pearls.</label>
+      </div>
+  </div>
+  <div class="lemon-green-tea">
+      <img src="img/lemon-boba.jpg" alt="">
+  </div>
+  <div class="lemon-green-tea-body">
+      <h2>Lemon Green Tea</h2>
+      <label>Lemon Green Tea is a refreshing and zesty drink that combines the bright citrus notes of lemon with the
+          subtle bitterness of green tea.</label>
+  </div>
+  </div>
+  <div class="mango-strawberry-tea">
+      <img src="img/mango-straw.jpg" alt="">
+  </div>
+  <div class="mango-strawberry-tea-body">
+      <h2>Mango Strawberry Tea</h2>
+      <label>Mango Strawberry Tea is a fruity tea infusion pairing the tropical sweetness of mango with the tangy
+          flavor of ripe strawberries.</label>
+  </div>
+  </div>
+  <div class="lychee-jasmine-tea">
+      <img src="img/lychee-jasmine.jpg" alt="">
+  </div>
+  <div class="lychee-jasmine-tea-body">
+      <h2>Lychee Jasmine Tea</h2>
+      <label>Lychee Jasmine Tea is a fragrant blend combining the floral notes of jasmine with the sweet essence of
+          lychee fruit.</label>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <div class="shop" id="shop">
+      <div class="shop-header">
+          <h3>Shop</h3>
+          <h4>Bubble Tea</h4>
+      </div>
+      <div class="shop-box">
+          <div class="item-1">
+              <div class="card">
+                  <div class="card-image">
+                      <img src="img/blacksugar.webp">
+                  </div>
+                  <div id="star1" class="card-body">
+                      <label class="cash">5.50$</label>
+                      <h3>Black Sugar Boba</h3>
+                      <label for="rating">Rating (1-5):</label>
+                      <form id="rating1">
+                        <span style="color:black">
+                          <input type="number" id="rating1" min="1" max="5" step=".1">
+                          <input type="submit">
+                        </span>
+                      </form>
+                    </div>
+              </div>
+          </div>
+          <div class="item-2">
+              <div class="card">
+                  <div class="card-image">
+                      <img src="img/matcha-boba.jpg">
+                  </div>
+                  <div id="star2" class="card-body">
+                      <label class="cash">5.50$</label>
+                      <h3>Matcha Boba Milk</h3>
+                      <label for="rating">Rating (1-5):</label>
+                      <form id="rating2">
+                        <span style="color:black">
+                          <input type="number" id="rating2" min="1" max="5" step=".1">
+                          <input type="submit">
+                        </span>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          <div class="item-3">
+              <div class="card">
+                  <div class="card-image">
+                      <img src="img/lemon-boba.jpg">
+                  </div>
+                  <div id="star3" class="card-body">
+                      <label class="cash">5.00$</label>
+                      <h3>Lemon Green Tea</h3>
+                      <label for="rating">Rating (1-5):</label>
+                      <form id="rating3">
+                        <span style="color:black">
+                          <input type="number" id="rating3" min="1" max="5" step=".1">
+                          <input type="submit">
+                        </span>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          <div class="item-4">
+              <div class="card">
+                  <div class="card-image">
+                      <img src="img/mango-straw.jpg">
+                  </div>
+                  <div id="star4" class="card-body">
+                      <label class="cash">6.50$</label>
+                      <h3>Mango Strawberry Tea</h3>
+                      <label for="rating">Rating (1-5):</label>
+                      <form id="rating4">
+                        <span style="color:black">
+                          <input type="number" id="rating4" min="1" max="5" step=".1">
+                          <input type="submit">
+                        </span>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          <div class="item-5">
+              <div class="card">
+                  <div class="card-image">
+                      <img src="img/lychee-jasmine.jpg">
+                  </div>
+                  <div id="star5" class="card-body">
+                      <label class="cash">5.00$</label>
+                      <h3>Lychee Jasmine Tea</h3>
+                      <label for="rating">Rating (1-5):</label>
+                      <form id="rating5">
+                        <span style="color:black">
+                          <input type="number" id="rating5" min="1" max="5" step=".1">
+                          <input type="submit">
+                        </span>
+                      </form>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="contact" id="contact">
+      <div class="contact-box">
+          <div class="contact-image">
+              <img src="img/background.jpg" alt="">
+          </div>
+      </div>
+      <div class="contact-box">
+          <div class="contact-body">
+              <form id="contact-us">
+                  <h2>Contact Us</h2>
+                  <div class="form-content">
+                      <input type="email" id="email" required>
+                      <span></span>
+                      <label>Email</label>
+                  </div>
+                  <div class="form-content">
+                      <input type="text" id="message" required>
+                      <span></span>
+                      <label>Message</label>
+                  </div>
+                  <button type="submit">Send</button>
+              </form>
+          </div>
+      </div>
+  </div>
+
+
+  <div class="footer">
+      <div class="footer-box">
+          <div class="copyright">
+              <label>Copyright &copy; 2023</label>
+          </div>
+          <div class="band">
+              <label>Bubble <span>Tea</span></label>
+          </div>
+      </div>
+  </div>
+
+  <script src="js/index.js"></script>
+  </body>
+</html>
