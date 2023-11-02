@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", event => {
             const signOut = document.getElementById("signOut");
             signOut.onclick = () => auth.signOut();
 
+            // Contact Us 
             const contact = document.querySelector('#contact-us')
             contact.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -116,7 +117,8 @@ document.addEventListener("DOMContentLoaded", event => {
                 const dbcontact = db.collection('contact us').doc('messages');
                 const email = contact['email'].value;
                 const message = contact['message'].value;
-                dbcontact.update({messages: email + ': ' + message})
+                dbcontact.update({messages: email + ': ' + message});
+                contact.reset();
             })
 
         } else {
